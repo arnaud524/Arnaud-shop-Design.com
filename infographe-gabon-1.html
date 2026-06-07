@@ -1,0 +1,623 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Infographe Pro – Gabon</title>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --gold: #D4A847;
+      --dark: #0F0E0A;
+      --cream: #F5F0E8;
+      --accent: #C8502A;
+      --muted: #7A7260;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      font-family: 'DM Sans', sans-serif;
+      background: var(--dark);
+      color: var(--cream);
+      overflow-x: hidden;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      padding: 2rem;
+      position: relative;
+      background:
+        radial-gradient(ellipse 80% 60% at 50% 0%, rgba(212,168,71,0.18) 0%, transparent 70%),
+        radial-gradient(ellipse 50% 40% at 80% 80%, rgba(200,80,42,0.12) 0%, transparent 60%),
+        var(--dark);
+    }
+
+    .hero::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background-image:
+        repeating-linear-gradient(0deg, transparent, transparent 59px, rgba(212,168,71,0.04) 60px),
+        repeating-linear-gradient(90deg, transparent, transparent 59px, rgba(212,168,71,0.04) 60px);
+      pointer-events: none;
+    }
+
+    .badge {
+      display: inline-block;
+      border: 1px solid var(--gold);
+      color: var(--gold);
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      padding: 0.4rem 1.1rem;
+      border-radius: 100px;
+      margin-bottom: 1.8rem;
+      opacity: 0;
+      animation: fadeUp 0.6s 0.2s forwards;
+    }
+
+    .hero h1 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.8rem, 8vw, 6rem);
+      font-weight: 900;
+      line-height: 1.05;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.4s forwards;
+    }
+
+    .hero h1 span {
+      color: var(--gold);
+      display: block;
+    }
+
+    .hero p {
+      margin-top: 1.5rem;
+      font-size: 1.05rem;
+      color: var(--muted);
+      max-width: 480px;
+      line-height: 1.7;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.6s forwards;
+    }
+
+    .hero-btns {
+      margin-top: 2.5rem;
+      display: flex;
+      gap: 1rem;
+      flex-wrap: wrap;
+      justify-content: center;
+      opacity: 0;
+      animation: fadeUp 0.7s 0.8s forwards;
+    }
+
+    .btn-primary {
+      background: var(--gold);
+      color: var(--dark);
+      padding: 0.85rem 2rem;
+      border-radius: 6px;
+      font-weight: 500;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: transform 0.2s, box-shadow 0.2s;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+    .btn-primary:hover { transform: translateY(-2px); box-shadow: 0 8px 24px rgba(212,168,71,0.35); }
+
+    .btn-outline {
+      border: 1px solid rgba(212,168,71,0.4);
+      color: var(--cream);
+      padding: 0.85rem 2rem;
+      border-radius: 6px;
+      font-size: 0.95rem;
+      text-decoration: none;
+      transition: border-color 0.2s, background 0.2s;
+    }
+    .btn-outline:hover { border-color: var(--gold); background: rgba(212,168,71,0.08); }
+
+    .scroll-hint {
+      position: absolute;
+      bottom: 2rem;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.4rem;
+      color: var(--muted);
+      font-size: 0.72rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      opacity: 0;
+      animation: fadeUp 0.7s 1.2s forwards;
+    }
+    .scroll-hint::after {
+      content: '';
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: pulse 1.5s infinite;
+    }
+
+    /* ── SECTION BASE ── */
+    section { padding: 5rem 1.5rem; }
+    .container { max-width: 1000px; margin: 0 auto; }
+
+    .section-label {
+      font-size: 0.72rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--gold);
+      margin-bottom: 1rem;
+    }
+    .section-title {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2rem, 5vw, 3rem);
+      font-weight: 700;
+      line-height: 1.1;
+      margin-bottom: 1rem;
+    }
+    .section-sub {
+      color: var(--muted);
+      max-width: 520px;
+      line-height: 1.7;
+    }
+
+    /* ── SERVICES ── */
+    .services-bg {
+      background: #141310;
+    }
+
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+      gap: 1.2rem;
+      margin-top: 3rem;
+    }
+
+    .service-card {
+      background: #1A1916;
+      border: 1px solid rgba(212,168,71,0.12);
+      border-radius: 10px;
+      padding: 2rem 1.6rem;
+      transition: border-color 0.3s, transform 0.3s;
+      cursor: default;
+    }
+    .service-card:hover {
+      border-color: rgba(212,168,71,0.45);
+      transform: translateY(-4px);
+    }
+
+    .service-icon {
+      width: 48px;
+      height: 48px;
+      background: rgba(212,168,71,0.1);
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      margin-bottom: 1.2rem;
+    }
+
+    .service-card h3 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.15rem;
+      margin-bottom: 0.6rem;
+    }
+
+    .service-card p {
+      color: var(--muted);
+      font-size: 0.9rem;
+      line-height: 1.65;
+    }
+
+    .service-price {
+      margin-top: 1.2rem;
+      color: var(--gold);
+      font-size: 0.88rem;
+      font-weight: 500;
+    }
+
+    /* ── PORTFOLIO ── */
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 1.2rem;
+      margin-top: 3rem;
+    }
+
+    .portfolio-item {
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+      aspect-ratio: 4/3;
+      background: #1A1916;
+      border: 1px solid rgba(212,168,71,0.1);
+    }
+
+    .portfolio-preview {
+      width: 100%;
+      height: 100%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 3rem;
+      position: relative;
+    }
+
+    .p1 { background: linear-gradient(135deg, #1a0a2e, #2d1b69); }
+    .p2 { background: linear-gradient(135deg, #0a1628, #1a3a5c); }
+    .p3 { background: linear-gradient(135deg, #1a0a0a, #5c1a1a); }
+    .p4 { background: linear-gradient(135deg, #0a1a0a, #1a5c2d); }
+    .p5 { background: linear-gradient(135deg, #1a1a0a, #5c4a1a); }
+    .p6 { background: linear-gradient(135deg, #0a1a1a, #1a4a5c); }
+
+    .portfolio-overlay {
+      position: absolute;
+      inset: 0;
+      background: rgba(15,14,10,0.82);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      opacity: 0;
+      transition: opacity 0.3s;
+      padding: 1.5rem;
+      text-align: center;
+    }
+    .portfolio-item:hover .portfolio-overlay { opacity: 1; }
+    .portfolio-overlay h4 {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.05rem;
+      margin-bottom: 0.4rem;
+    }
+    .portfolio-overlay p { color: var(--muted); font-size: 0.82rem; }
+
+    /* ── PROCESS ── */
+    .process-bg { background: #141310; }
+
+    .steps {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+      gap: 1rem;
+      margin-top: 3rem;
+      counter-reset: step;
+    }
+
+    .step {
+      padding: 1.8rem 1.4rem;
+      border-top: 2px solid rgba(212,168,71,0.2);
+      position: relative;
+      counter-increment: step;
+    }
+
+    .step::before {
+      content: "0" counter(step);
+      font-family: 'Playfair Display', serif;
+      font-size: 2.5rem;
+      color: rgba(212,168,71,0.15);
+      font-weight: 900;
+      display: block;
+      margin-bottom: 0.8rem;
+    }
+
+    .step h3 {
+      font-size: 1rem;
+      font-weight: 500;
+      margin-bottom: 0.5rem;
+    }
+
+    .step p { color: var(--muted); font-size: 0.88rem; line-height: 1.6; }
+
+    /* ── CONTACT ── */
+    .contact-box {
+      background: #1A1916;
+      border: 1px solid rgba(212,168,71,0.15);
+      border-radius: 14px;
+      padding: 3rem 2rem;
+      text-align: center;
+      max-width: 600px;
+      margin: 0 auto;
+    }
+
+    .contact-box h2 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(1.8rem, 4vw, 2.5rem);
+      margin-bottom: 1rem;
+    }
+
+    .contact-box p { color: var(--muted); margin-bottom: 2rem; line-height: 1.7; }
+
+    .contact-links {
+      display: flex;
+      flex-direction: column;
+      gap: 0.9rem;
+      align-items: center;
+    }
+
+    .contact-link {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      background: rgba(212,168,71,0.07);
+      border: 1px solid rgba(212,168,71,0.2);
+      border-radius: 8px;
+      padding: 0.9rem 1.6rem;
+      text-decoration: none;
+      color: var(--cream);
+      font-size: 0.95rem;
+      width: 100%;
+      max-width: 340px;
+      transition: background 0.2s, border-color 0.2s;
+    }
+    .contact-link:hover { background: rgba(212,168,71,0.14); border-color: var(--gold); }
+    .contact-link .icon { font-size: 1.3rem; }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid rgba(212,168,71,0.1);
+      padding: 2rem 1.5rem;
+      text-align: center;
+      color: var(--muted);
+      font-size: 0.82rem;
+    }
+
+    footer span { color: var(--gold); }
+
+    /* ── ANIMATIONS ── */
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(20px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes pulse {
+      0%, 100% { opacity: 0.4; }
+      50% { opacity: 1; }
+    }
+
+    /* ── NAV ── */
+    nav {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      padding: 1.2rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      background: rgba(15,14,10,0.85);
+      backdrop-filter: blur(12px);
+      border-bottom: 1px solid rgba(212,168,71,0.08);
+    }
+
+    .nav-logo {
+      font-family: 'Playfair Display', serif;
+      font-size: 1.2rem;
+      color: var(--cream);
+      text-decoration: none;
+    }
+    .nav-logo span { color: var(--gold); }
+
+    .nav-links {
+      display: flex;
+      gap: 2rem;
+      list-style: none;
+    }
+
+    .nav-links a {
+      color: var(--muted);
+      text-decoration: none;
+      font-size: 0.88rem;
+      transition: color 0.2s;
+    }
+    .nav-links a:hover { color: var(--cream); }
+
+    @media (max-width: 600px) {
+      .nav-links { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <a href="#" class="nav-logo">Arnaud<span> DESIGN</span></a>
+  <ul class="nav-links">
+    <li><a href="#services">Services</a></li>
+    <li><a href="#portfolio">Portfolio</a></li>
+    <li><a href="#process">Processus</a></li>
+    <li><a href="#contact">Contact</a></li>
+  </ul>
+</nav>
+
+<!-- HERO -->
+<header class="hero">
+  <div class="badge">🇬🇦 Bienvenue chez Arnaud DESIGN · Gabon</div>
+  <h1>Le service est<span>précieux pour nous !</span></h1>
+  <p>Créations graphiques professionnelles et abordables : logos, flyers, affiches, CV et bien plus — livraison rapide au Gabon.</p>
+  <div class="hero-btns">
+    <a href="#contact" class="btn-primary">📲 Me contacter</a>
+    <a href="#services" class="btn-outline">Voir mes services</a>
+  </div>
+  <div class="scroll-hint">Découvrir</div>
+</header>
+
+<!-- SERVICES -->
+<section class="services-bg" id="services">
+  <div class="container">
+    <p class="section-label">Ce que je fais</p>
+    <h2 class="section-title">Mes services</h2>
+    <p class="section-sub">Des créations adaptées à vos besoins, livrées rapidement avec soin et professionnalisme.</p>
+
+    <div class="services-grid">
+      <div class="service-card">
+        <div class="service-icon">📄</div>
+        <h3>Flyer</h3>
+        <p>Conception de flyers percutants pour vos événements, promotions et annonces.</p>
+        <p class="service-price">2 500 FCFA</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🎪</div>
+        <h3>Affiche</h3>
+        <p>Affiches grand format pour vos événements, concerts, campagnes publicitaires.</p>
+        <p class="service-price">2 500 FCFA</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🎨</div>
+        <h3>Logo</h3>
+        <p>Création de logo unique et professionnel pour votre marque ou entreprise.</p>
+        <p class="service-price">3 000 FCFA</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">💌</div>
+        <h3>Carte d'invitation</h3>
+        <p>Invitations élégantes pour mariages, anniversaires, cérémonies et événements.</p>
+        <p class="service-price">2 000 FCFA</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📜</div>
+        <h3>Attestation</h3>
+        <p>Conception d'attestations, diplômes et certificats à votre image.</p>
+        <p class="service-price">4 000 FCFA</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">🖼️</div>
+        <h3>Champ personnalisé</h3>
+        <p>Tout visuel personnalisé selon vos besoins spécifiques : bannières, stickers, etc.</p>
+        <p class="service-price">2 500 FCFA</p>
+      </div>
+      <div class="service-card">
+        <div class="service-icon">📋</div>
+        <h3>CV</h3>
+        <p>CV professionnel et moderne, mis en page pour maximiser vos chances.</p>
+        <p class="service-price">2 500 FCFA</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PORTFOLIO -->
+<section id="portfolio">
+  <div class="container">
+    <p class="section-label">Mes réalisations</p>
+    <h2 class="section-title">Portfolio</h2>
+    <p class="section-sub">Quelques exemples de travaux réalisés pour des clients au Gabon et ailleurs.</p>
+
+    <div class="portfolio-grid">
+      <div class="portfolio-item">
+        <div class="portfolio-preview p1">🎨</div>
+        <div class="portfolio-overlay">
+          <h4>Logo – Restaurant Libreville</h4>
+          <p>Identité visuelle complète</p>
+        </div>
+      </div>
+      <div class="portfolio-item">
+        <div class="portfolio-preview p2">📱</div>
+        <div class="portfolio-overlay">
+          <h4>Campagne réseaux sociaux</h4>
+          <p>Pack de 10 visuels Instagram</p>
+        </div>
+      </div>
+      <div class="portfolio-item">
+        <div class="portfolio-preview p3">🎪</div>
+        <div class="portfolio-overlay">
+          <h4>Affiche événement</h4>
+          <p>Concert – Libreville 2024</p>
+        </div>
+      </div>
+      <div class="portfolio-item">
+        <div class="portfolio-preview p4">🌿</div>
+        <div class="portfolio-overlay">
+          <h4>Branding – Boutique mode</h4>
+          <p>Logo + carte de visite + flyer</p>
+        </div>
+      </div>
+      <div class="portfolio-item">
+        <div class="portfolio-preview p5">📊</div>
+        <div class="portfolio-overlay">
+          <h4>Présentation entreprise</h4>
+          <p>20 slides PowerPoint</p>
+        </div>
+      </div>
+      <div class="portfolio-item">
+        <div class="portfolio-preview p6">🖨️</div>
+        <div class="portfolio-overlay">
+          <h4>Menu – Maquis local</h4>
+          <p>Design recto-verso imprimable</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PROCESS -->
+<section class="process-bg" id="process">
+  <div class="container">
+    <p class="section-label">Comment ça marche</p>
+    <h2 class="section-title">Mon processus</h2>
+    <p class="section-sub">Simple, rapide et transparent. Du premier message à la livraison finale.</p>
+    <div class="steps">
+      <div class="step">
+        <h3>Prise de contact</h3>
+        <p>Envoyez-moi un message WhatsApp ou Facebook pour décrire votre besoin.</p>
+      </div>
+      <div class="step">
+        <h3>Devis gratuit</h3>
+        <p>Je vous envoie un prix clair et un délai de livraison sous 24h.</p>
+      </div>
+      <div class="step">
+        <h3>Création</h3>
+        <p>Je réalise votre design et vous envoie une première version pour validation.</p>
+      </div>
+      <div class="step">
+        <h3>Retouches</h3>
+        <p>Vous demandez vos modifications, je les applique jusqu'à votre satisfaction.</p>
+      </div>
+      <div class="step">
+        <h3>Livraison</h3>
+        <p>Fichiers finaux envoyés par WhatsApp ou email, paiement via Airtel / Moov Money.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section id="contact">
+  <div class="container">
+    <div class="contact-box">
+      <h2>Contactez Arnaud DESIGN ✨</h2>
+      <p>Basé au Gabon, disponible 7j/7. Réponse rapide garantie. Paiement Airtel Money & Moov Money accepté.</p>
+      <div class="contact-links">
+        <a href="https://wa.me/241074030694" class="contact-link" target="_blank">
+          <span class="icon">💬</span>
+          <span>WhatsApp – +241 074 030 694</span>
+        </a>
+        <a href="https://www.facebook.com/share/1Cf9S1LT1q/" class="contact-link" target="_blank">
+          <span class="icon">📘</span>
+          <span>Facebook – Arnaud DESIGN</span>
+        </a>
+        <a href="mailto:arnauddesign6@gmail.com" class="contact-link">
+          <span class="icon">📧</span>
+          <span>arnauddesign6@gmail.com</span>
+        </a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <p>© 2026 <span>Arnaud DESIGN</span> · Tous droits réservés · Libreville, Gabon</p>
+</footer>
+
+</body>
+</html>
